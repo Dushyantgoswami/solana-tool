@@ -32,9 +32,6 @@ export const AllBalance = async (req: Request, res: Response) => {
         if (amount > 0) {
             //get the token name, symbol and logo
             const mintAddress = new PublicKey(mint);
-            let tokenName;
-            let tokenSymbol;
-            let tokenLogo;
             const metadataAccount = metaplex
                 .nfts()
                 .pdas()
