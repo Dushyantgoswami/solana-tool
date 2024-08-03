@@ -26,7 +26,7 @@ export const BatchSender = (req: Request, res: Response) => {
         for (let i = 0; i < dropList.length; i++) {
             const tx = SystemProgram.transfer({
                 fromPubkey: fromWallet,
-                toPubkey: new PublicKey(dropList[i].walletAddress),
+                toPubkey: new PublicKey(dropList[i]),
                 lamports: Amount
             });
             txInstructions.push(tx); // Add each transfer instruction to the array
@@ -64,8 +64,6 @@ export const BatchSender = (req: Request, res: Response) => {
             )
         })
         result = await Promise.allSettled(staggeredTransactions); // Wait for all transactions to settle
-        console.log(result);
-
         return result; // Return the results of the transactions
     }
 
