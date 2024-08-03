@@ -9,9 +9,8 @@ import fs from "fs";
 
 export const GenerateAdd = (req: Request, res: Response) => {
     const addCount: number = req.body.addCount;
-    console.log(addCount);
 
-    let keypairs = [];
+    let keypairs: any = [];
 
     for (let i = 0; i < addCount; i++) {
         const keypair = Keypair.generate();
@@ -23,12 +22,17 @@ export const GenerateAdd = (req: Request, res: Response) => {
 
 
     const csv = json2csv.parse(keypairs);
+    const json = JSON.stringify(keypairs);
 
-    const uniqueName = `keypairs-${uuidv4()}.csv`;
-    const filePath = path.join(__dirname, uniqueName);
-    fs.writeFileSync(filePath, csv);
+    const uniqueNameCsv = `keypairs-${uuidv4()}.csv`;
+    const uniqueNameJson = `keypairs-${uuidv4()}.json`;
+    const filePathCsv = path.join(__dirname, uniqueNameCsv);
+    const filePathJson = path.join(__dirname, uniqueNameJson)
+    fs.writeFileSync(filePathCsv, csv);
+    fs.writeFileSync(filePathJson, json);
 
     res.json({
-        filePath: `${uniqueName}`
+        filePathCsv: `${uniqueNameCsv}`,
+        filePathJson: `${uniqueNameJson}`
     });
 }
